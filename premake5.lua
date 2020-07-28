@@ -16,6 +16,11 @@ workspace "Quipo"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Quipo/vendor/GLFW/include"
+
+include "Quipo/vendor/GLFW"
+
 project "Quipo"
 	location "Quipo"
 	language "C++"
@@ -39,11 +44,23 @@ project "Quipo"
   includedirs
   {
     "%{prj.name}/src",
-		"%{prj.name}/vendor/spdlog/include"
+		"%{prj.name}/vendor/spdlog/include",
+		"%{IncludeDir.GLFW}"
   }
+
+	links
+	{
+		"GLFW"
+	}
 
 	filter "system:linux"
 		kind "SharedLib"
+
+		links
+		{
+			"dl",
+			"pthread"
+		}
 
 		defines
 		{

@@ -38,7 +38,8 @@ project "Quipo"
 
   includedirs
   {
-    "%{prj.name}/src"
+    "%{prj.name}/src",
+		"%{prj.name}/vendor/spdlog/include"
   }
 
 	filter "system:linux"
@@ -83,6 +84,7 @@ project "Sandbox"
 	includedirs
 	{
 		"Quipo/src",
+		"Quipo/vendor/spdlog/include"
 	}
 
 	links

@@ -1,0 +1,6 @@
+# Folders
+bin/
+bin-int/
+
+# Files
+Makefile

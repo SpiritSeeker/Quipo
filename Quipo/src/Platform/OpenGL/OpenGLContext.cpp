@@ -16,7 +16,7 @@ namespace Quipo {
   {
     glfwMakeContextCurrent(m_WindowHandle);
     int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		QP_CORE_ASSERT(status, "Failed to initialize Glad!");
+    QP_CORE_ASSERT(status, "Failed to initialize Glad!");
 
     QP_CORE_INFO("OpenGL Info:");
     QP_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));

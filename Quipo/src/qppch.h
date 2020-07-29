@@ -4,6 +4,7 @@
 
 // Data structures
 #include <string>
+#include <sstream>
 
 // Logger
-#include "Quipo/Log.h"
+#include "Quipo/Core/Log.h"

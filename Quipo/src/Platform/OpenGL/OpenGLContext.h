@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Quipo/GraphicsContext.h"
+#include "Quipo/Renderer/GraphicsContext.h"
 
 struct GLFWwindow;
 

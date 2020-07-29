@@ -5,17 +5,17 @@
 
 namespace Quipo {
 
-	class Log
-	{
-	public:
-		static void Init();
+  class Log
+  {
+  public:
+    static void Init();
 
-		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
-		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
-	private:
-		static std::shared_ptr<spdlog::logger> s_CoreLogger;
-		static std::shared_ptr<spdlog::logger> s_ClientLogger;
-	};
+    inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return s_CoreLogger; }
+    inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return s_ClientLogger; }
+  private:
+    static std::shared_ptr<spdlog::logger> s_CoreLogger;
+    static std::shared_ptr<spdlog::logger> s_ClientLogger;
+  };
 }
 
 // Core log macros
@@ -33,11 +33,11 @@ namespace Quipo {
 #define QP_FATAL(...)   ::Quipo::Log::GetClientLogger()->fatal(__VA_ARGS__)
 
 #ifdef QP_PLATFORM_LINUX
-	#ifdef QP_ENABLE_ASSERTS
-		#define QP_ASSERT(x, ...) { if(!(x)) QP_ERROR("Assertion Failed: {0}", __VA_ARGS__); }
-		#define QP_CORE_ASSERT(x, ...) { if(!(x)) QP_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); }
-	#else
-		#define QP_ASSERT(x, ...)
-		#define QP_CORE_ASSERT(x, ...)
-	#endif
+  #ifdef QP_ENABLE_ASSERTS
+    #define QP_ASSERT(x, ...) { if(!(x)) QP_ERROR("Assertion Failed: {0}", __VA_ARGS__); }
+    #define QP_CORE_ASSERT(x, ...) { if(!(x)) QP_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); }
+  #else
+    #define QP_ASSERT(x, ...)
+    #define QP_CORE_ASSERT(x, ...)
+  #endif
 #endif

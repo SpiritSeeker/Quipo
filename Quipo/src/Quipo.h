@@ -2,5 +2,5 @@
 
 #include "qppch.h"
 
-#include "Quipo/Application.h"
-#include "Quipo/EntryPoint.h"
+#include "Quipo/Core/Application.h"
+#include "Quipo/Core/EntryPoint.h"

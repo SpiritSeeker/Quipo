@@ -3,6 +3,8 @@
 #include "Quipo/Core/Core.h"
 #include "Quipo/Core/Window.h"
 
+#include "Quipo/Core/LayerStack.h"
+
 #include "Quipo/Events/Event.h"
 #include "Quipo/Events/ApplicationEvent.h"
 #include "Quipo/Events/MouseEvent.h"
@@ -21,6 +23,9 @@ namespace Quipo {
 
     void Close();
 
+    void PushLayer(Layer* layer);
+    void PushOverlay(Layer* overlay);
+
     inline Window& GetWindow() { return *m_Window; }
     inline static Application& Get() { return *s_Instance; }
   private:
@@ -30,6 +35,8 @@ namespace Quipo {
     std::unique_ptr<Window> m_Window;
     bool m_Running = true;
     bool m_Minimized = false;
+
+    LayerStack m_LayerStack;
   private:
     static Application* s_Instance;
   };

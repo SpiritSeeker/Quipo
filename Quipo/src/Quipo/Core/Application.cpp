@@ -6,6 +6,7 @@
 #include <glad/glad.h>
 
 #include "Quipo/Renderer/RenderCommand.h"
+#include "Quipo/Renderer/Renderer.h"
 
 namespace Quipo {
 
@@ -19,20 +20,23 @@ namespace Quipo {
     m_Window->SetEventCallback(QP_BIND_EVENT_FN(Application::OnEvent));
     m_Window->SetVSync(true);
 
+    Renderer::Init();
+
     ////////////////////////////////////////////////
     /////// OpenGL code: To be removed later ///////
     m_VertexArray = VertexArray::Create();
 
-    float vertices[12] = {
-      -0.5f, -0.5f, 0.0f,
-       0.5f, -0.5f, 0.0f,
-       0.5f,  0.5f, 0.0f,
-      -0.5f,  0.5f, 0.0f
+    float vertices[20] = {
+      -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+       0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+       0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+      -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
     };
 
     m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
     BufferLayout layout = {
-      { ShaderDataType::Float3, "a_Position" }
+      { ShaderDataType::Float3, "a_Position" },
+      { ShaderDataType::Float2, "a_TexCoord" }
     };
     m_VertexBuffer->SetLayout(layout);
     m_VertexArray->AddVertexBuffer(m_VertexBuffer);
@@ -45,8 +49,10 @@ namespace Quipo {
     m_IndexBuffer = IndexBuffer::Create(indices, 6);
     m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-    m_Shader = Shader::Create("Sandbox/assets/shaders/FlatColor.glsl");
+    m_Shader = Shader::Create("Sandbox/assets/shaders/Texture.glsl");
     m_Shader->Bind();
+
+    m_Texture = Texture2D::Create("Sandbox/assets/textures/cloud.png");
     ////////////////////////////////////////////////
   }
 
@@ -95,7 +101,8 @@ namespace Quipo {
       RenderCommand::Clear();
 
       m_Shader->Bind();
-      m_Shader->SetFloat4("u_Color", { 0.7f, 0.1f, 0.2f, 1.0f });
+      m_Texture->Bind(0);
+      m_Shader->SetInt("u_Texture", 0);
       RenderCommand::DrawIndexed(m_VertexArray, 6);
       ////////////////////////////////////////////////
       if (!m_Minimized)

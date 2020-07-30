@@ -13,6 +13,7 @@
 #include "Quipo/Renderer/Buffer.h"
 #include "Quipo/Renderer/Shader.h"
 #include "Quipo/Renderer/VertexArray.h"
+#include "Quipo/Renderer/Texture.h"
 
 namespace Quipo {
 
@@ -46,6 +47,7 @@ namespace Quipo {
     Ref<VertexBuffer> m_VertexBuffer;
     Ref<IndexBuffer> m_IndexBuffer;
     Ref<Shader> m_Shader;
+    Ref<Texture2D> m_Texture;
   private:
     static Application* s_Instance;
   };

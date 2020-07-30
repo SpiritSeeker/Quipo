@@ -4,3 +4,6 @@
 [submodule "Quipo/vendor/GLFW"]
 	path = Quipo/vendor/GLFW
 	url = https://github.com/SpiritSeeker/glfw
+[submodule "Quipo/vendor/glm"]
+	path = Quipo/vendor/glm
+	url = https://github.com/g-truc/glm

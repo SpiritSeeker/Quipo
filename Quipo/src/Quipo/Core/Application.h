@@ -10,6 +10,10 @@
 #include "Quipo/Events/MouseEvent.h"
 #include "Quipo/Events/KeyEvent.h"
 
+#include "Quipo/Renderer/Buffer.h"
+#include "Quipo/Renderer/Shader.h"
+#include "Quipo/Renderer/VertexArray.h"
+
 namespace Quipo {
 
   class Application
@@ -37,6 +41,11 @@ namespace Quipo {
     bool m_Minimized = false;
 
     LayerStack m_LayerStack;
+
+    Ref<VertexArray> m_VertexArray;
+    Ref<VertexBuffer> m_VertexBuffer;
+    Ref<IndexBuffer> m_IndexBuffer;
+    Ref<Shader> m_Shader;
   private:
     static Application* s_Instance;
   };

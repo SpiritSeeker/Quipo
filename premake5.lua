@@ -19,6 +19,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Quipo/vendor/GLFW/include"
 IncludeDir["Glad"] = "Quipo/vendor/Glad/include"
+IncludeDir["glm"] = "Quipo/vendor/glm"
 
 include "Quipo/vendor/GLFW"
 include "Quipo/vendor/Glad"
@@ -41,6 +42,8 @@ project "Quipo"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 	}
 
   includedirs
@@ -48,7 +51,8 @@ project "Quipo"
     "%{prj.name}/src",
 		"%{prj.name}/vendor/spdlog/include",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.glm}"
   }
 
 	links
@@ -110,7 +114,8 @@ project "Sandbox"
 	includedirs
 	{
 		"Quipo/src",
-		"Quipo/vendor/spdlog/include"
+		"Quipo/vendor/spdlog/include",
+		"%{IncludeDir.glm}"
 	}
 
 	links

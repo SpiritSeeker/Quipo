@@ -19,5 +19,4 @@ void ExampleLayer::OnUpdate()
 
 void ExampleLayer::OnEvent(Quipo::Event& e)
 {
-  QP_TRACE("{0}", e);
 }

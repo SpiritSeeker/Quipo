@@ -3,6 +3,10 @@
 
 #include "Quipo/Core/Core.h"
 
+#include <glad/glad.h>
+
+#include "Quipo/Renderer/RenderCommand.h"
+
 namespace Quipo {
 
   Application* Application::s_Instance = nullptr;
@@ -14,6 +18,36 @@ namespace Quipo {
     m_Window = std::unique_ptr<Window>(Window::Create(WindowProps(name)));
     m_Window->SetEventCallback(QP_BIND_EVENT_FN(Application::OnEvent));
     m_Window->SetVSync(true);
+
+    ////////////////////////////////////////////////
+    /////// OpenGL code: To be removed later ///////
+    m_VertexArray = VertexArray::Create();
+
+    float vertices[12] = {
+      -0.5f, -0.5f, 0.0f,
+       0.5f, -0.5f, 0.0f,
+       0.5f,  0.5f, 0.0f,
+      -0.5f,  0.5f, 0.0f
+    };
+
+    m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
+    BufferLayout layout = {
+      { ShaderDataType::Float3, "a_Position" }
+    };
+    m_VertexBuffer->SetLayout(layout);
+    m_VertexArray->AddVertexBuffer(m_VertexBuffer);
+
+    uint32_t indices[6] = {
+      0, 1, 2,
+      2, 3, 0
+    };
+
+    m_IndexBuffer = IndexBuffer::Create(indices, 6);
+    m_VertexArray->SetIndexBuffer(m_IndexBuffer);
+
+    m_Shader = Shader::Create("Sandbox/assets/shaders/FlatColor.glsl");
+    m_Shader->Bind();
+    ////////////////////////////////////////////////
   }
 
   Application::~Application()
@@ -56,6 +90,14 @@ namespace Quipo {
   {
     while (m_Running)
     {
+      ////////////////////////////////////////////////
+      RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+      RenderCommand::Clear();
+
+      m_Shader->Bind();
+      m_Shader->SetFloat4("u_Color", { 0.7f, 0.1f, 0.2f, 1.0f });
+      RenderCommand::DrawIndexed(m_VertexArray, 6);
+      ////////////////////////////////////////////////
       if (!m_Minimized)
       {
         for (Layer* layer : m_LayerStack)

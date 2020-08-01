@@ -24,6 +24,8 @@ void ExampleLayer::OnUpdate(Quipo::Timestep ts)
   Quipo::Renderer2D::DrawQuad(glm::vec2({  0.25f,  0.25f }), glm::vec2(0.45f), glm::vec4({ 0.5f, 0.7f, 0.0f, 1.0f }));
   Quipo::Renderer2D::DrawQuad(glm::vec2({  0.25f, -0.25f }), glm::vec2(0.45f), glm::vec4({ 1.0f, 0.7f, 0.0f, 1.0f }));
 
+  Quipo::Renderer2D::DrawQuad(glm::vec2({ -0.5f, -0.5f }), glm::vec2(0.25f), m_Texture);
+
   Quipo::Renderer2D::EndScene();
 
   m_CameraController.OnUpdate(ts);

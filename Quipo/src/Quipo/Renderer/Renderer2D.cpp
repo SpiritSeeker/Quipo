@@ -16,8 +16,8 @@ namespace Quipo {
   struct Renderer2DStorage
   {
     Ref<VertexArray> QuadVertexArray;
-    Ref<Shader> FlatColorShader;
-    Ref<Shader> TextureShader;   // Make it a single shader later
+    Ref<Shader> TextureShader;
+    Ref<Texture2D> WhiteTexture;
   };
 
   static Renderer2DStorage s_Data;
@@ -49,7 +49,10 @@ namespace Quipo {
     Ref<IndexBuffer> indexBuffer = IndexBuffer::Create(indices, 6);
     s_Data.QuadVertexArray->SetIndexBuffer(indexBuffer);
 
-    s_Data.FlatColorShader = Shader::Create("Sandbox/assets/shaders/FlatColor.glsl");
+    s_Data.WhiteTexture = Texture2D::Create(1, 1);
+    uint32_t whiteTextureData = 0xffffffff;
+    s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
+
     s_Data.TextureShader = Shader::Create("Sandbox/assets/shaders/Texture.glsl");
     s_Data.TextureShader->Bind();
     s_Data.TextureShader->SetInt("u_Texture", 0);
@@ -61,9 +64,6 @@ namespace Quipo {
 
   void Renderer2D::BeginScene(const OrthographicCamera& camera)
   {
-    s_Data.FlatColorShader->Bind();
-    s_Data.FlatColorShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
-
     s_Data.TextureShader->Bind();
     s_Data.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
   }
@@ -79,12 +79,15 @@ namespace Quipo {
 
   void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
   {
-    s_Data.FlatColorShader->Bind();
-    s_Data.FlatColorShader->SetFloat4("u_Color", color);
+    s_Data.TextureShader->Bind();
+    s_Data.TextureShader->SetFloat4("u_Color", color);
+
+    s_Data.WhiteTexture->Bind(1);
+    s_Data.TextureShader->SetInt("u_Texture", 1);
 
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
                             * glm::scale(glm::mat4(1.0f), glm::vec3({ size.x, size.y, 1.0f }));
-    s_Data.FlatColorShader->SetMat4("u_Transform", transform);
+    s_Data.TextureShader->SetMat4("u_Transform", transform);
 
     s_Data.QuadVertexArray->Bind();
     RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
@@ -103,7 +106,10 @@ namespace Quipo {
                             * glm::scale(glm::mat4(1.0f), glm::vec3({ size.x, size.y, 1.0f }));
     s_Data.TextureShader->SetMat4("u_Transform", transform);
 
-    texture->Bind();
+    texture->Bind(0);
+    s_Data.TextureShader->SetInt("u_Texture", 0);
+
+    s_Data.TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 
     s_Data.QuadVertexArray->Bind();
     RenderCommand::DrawIndexed(s_Data.QuadVertexArray);

@@ -79,12 +79,9 @@ namespace Quipo {
 
   void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
   {
-    s_Data.TextureShader->Bind();
-    s_Data.TextureShader->SetFloat4("u_Color", color);
-
-    s_Data.WhiteTexture->Bind(1);
-    s_Data.TextureShader->SetInt("u_Texture", 1);
+    s_Data.WhiteTexture->Bind();
     s_Data.TextureShader->SetInt("u_TilingFactor", 1);
+    s_Data.TextureShader->SetFloat4("u_Color", color);
 
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
                             * glm::scale(glm::mat4(1.0f), glm::vec3({ size.x, size.y, 1.0f }));
@@ -101,16 +98,53 @@ namespace Quipo {
 
   void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, Ref<Texture2D>& texture, int tilingFactor, const glm::vec4& color)
   {
-    s_Data.TextureShader->Bind();
+    texture->Bind();
+    s_Data.TextureShader->SetInt("u_TilingFactor", tilingFactor);
+    s_Data.TextureShader->SetFloat4("u_Color", color);
 
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
                             * glm::scale(glm::mat4(1.0f), glm::vec3({ size.x, size.y, 1.0f }));
     s_Data.TextureShader->SetMat4("u_Transform", transform);
 
-    texture->Bind(0);
-    s_Data.TextureShader->SetInt("u_Texture", 0);
+    s_Data.QuadVertexArray->Bind();
+    RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
+  }
+
+  void Renderer2D::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, const glm::vec4& color)
+  {
+    DrawRotatedQuad({ position.x, position.y, 0.0f }, rotation, size, color);
+  }
+
+  void Renderer2D::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, const glm::vec4& color)
+  {
+    s_Data.WhiteTexture->Bind();
+    s_Data.TextureShader->SetInt("u_TilingFactor", 1);
+    s_Data.TextureShader->SetFloat4("u_Color", color);
+
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+                            * glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+                            * glm::scale(glm::mat4(1.0f), glm::vec3({ size.x, size.y, 1.0f }));
+    s_Data.TextureShader->SetMat4("u_Transform", transform);
+
+    s_Data.QuadVertexArray->Bind();
+    RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
+  }
+
+  void Renderer2D::DrawRotatedQuad(const glm::vec2& position, float rotation, const glm::vec2& size, Ref<Texture2D>& texture, int tilingFactor, const glm::vec4& color)
+  {
+    DrawRotatedQuad({ position.x, position.y, 1.0f }, rotation, size, texture, tilingFactor, color);
+  }
+
+  void Renderer2D::DrawRotatedQuad(const glm::vec3& position, float rotation, const glm::vec2& size, Ref<Texture2D>& texture, int tilingFactor, const glm::vec4& color)
+  {
+    texture->Bind();
     s_Data.TextureShader->SetInt("u_TilingFactor", tilingFactor);
     s_Data.TextureShader->SetFloat4("u_Color", color);
+
+    glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
+                            * glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
+                            * glm::scale(glm::mat4(1.0f), glm::vec3({ size.x, size.y, 1.0f }));
+    s_Data.TextureShader->SetMat4("u_Transform", transform);
 
     s_Data.QuadVertexArray->Bind();
     RenderCommand::DrawIndexed(s_Data.QuadVertexArray);

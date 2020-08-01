@@ -9,6 +9,9 @@
 #include "Quipo/Core/Layer.h"
 #include "Quipo/Core/Timestep.h"
 
+#include "Quipo/Renderer/OrthographicCameraController.h"
+#include "Quipo/Renderer/OrthographicCamera.h"
+
 ////////// Renderer //////////
 #include "Quipo/Renderer/Renderer.h"
 #include "Quipo/Renderer/RenderCommand.h"

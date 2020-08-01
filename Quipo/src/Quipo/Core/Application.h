@@ -44,12 +44,6 @@ namespace Quipo {
     LayerStack m_LayerStack;
 
     float m_LastFrameTime = 0.0f;
-
-    Ref<VertexArray> m_VertexArray;
-    Ref<VertexBuffer> m_VertexBuffer;
-    Ref<IndexBuffer> m_IndexBuffer;
-    Ref<Shader> m_Shader;
-    Ref<Texture2D> m_Texture;
   private:
     static Application* s_Instance;
   };

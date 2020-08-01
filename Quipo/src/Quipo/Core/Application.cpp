@@ -6,8 +6,6 @@
 #include "Quipo/Core/Timestep.h"
 #include <GLFW/glfw3.h>
 
-#include <glad/glad.h>
-
 #include "Quipo/Renderer/RenderCommand.h"
 #include "Quipo/Renderer/Renderer.h"
 
@@ -27,35 +25,7 @@ namespace Quipo {
 
     ////////////////////////////////////////////////
     /////// OpenGL code: To be removed later ///////
-    m_VertexArray = VertexArray::Create();
 
-    float vertices[20] = {
-      -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-       0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-       0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-      -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
-    };
-
-    m_VertexBuffer = VertexBuffer::Create(vertices, sizeof(vertices));
-    BufferLayout layout = {
-      { ShaderDataType::Float3, "a_Position" },
-      { ShaderDataType::Float2, "a_TexCoord" }
-    };
-    m_VertexBuffer->SetLayout(layout);
-    m_VertexArray->AddVertexBuffer(m_VertexBuffer);
-
-    uint32_t indices[6] = {
-      0, 1, 2,
-      2, 3, 0
-    };
-
-    m_IndexBuffer = IndexBuffer::Create(indices, 6);
-    m_VertexArray->SetIndexBuffer(m_IndexBuffer);
-
-    m_Shader = Shader::Create("Sandbox/assets/shaders/Texture.glsl");
-    m_Shader->Bind();
-
-    m_Texture = Texture2D::Create("Sandbox/assets/textures/cloud.png");
     ////////////////////////////////////////////////
   }
 
@@ -104,13 +74,7 @@ namespace Quipo {
       m_LastFrameTime = time;
 
       ////////////////////////////////////////////////
-      RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
-      RenderCommand::Clear();
 
-      m_Shader->Bind();
-      m_Texture->Bind(0);
-      m_Shader->SetInt("u_Texture", 0);
-      RenderCommand::DrawIndexed(m_VertexArray, 6);
       ////////////////////////////////////////////////
       if (!m_Minimized)
       {
@@ -137,6 +101,8 @@ namespace Quipo {
     }
 
     m_Minimized = false;
+    Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+    
     return false;
   }
 

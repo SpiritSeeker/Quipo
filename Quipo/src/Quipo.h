@@ -7,6 +7,7 @@
 #include "Quipo/Core/Input.h"
 
 #include "Quipo/Core/Layer.h"
+#include "Quipo/Core/Timestep.h"
 
 ////////// Renderer //////////
 #include "Quipo/Renderer/Renderer.h"

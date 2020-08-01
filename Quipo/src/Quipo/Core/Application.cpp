@@ -3,6 +3,9 @@
 
 #include "Quipo/Core/Core.h"
 
+#include "Quipo/Core/Timestep.h"
+#include <GLFW/glfw3.h>
+
 #include <glad/glad.h>
 
 #include "Quipo/Renderer/RenderCommand.h"
@@ -96,6 +99,10 @@ namespace Quipo {
   {
     while (m_Running)
     {
+      float time = (float)glfwGetTime(); // Platform::GetTime()
+      Timestep timestep = time - m_LastFrameTime;
+      m_LastFrameTime = time;
+
       ////////////////////////////////////////////////
       RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
       RenderCommand::Clear();
@@ -108,7 +115,7 @@ namespace Quipo {
       if (!m_Minimized)
       {
         for (Layer* layer : m_LayerStack)
-          layer->OnUpdate();
+          layer->OnUpdate(timestep);
       }
 
       m_Window->OnUpdate();

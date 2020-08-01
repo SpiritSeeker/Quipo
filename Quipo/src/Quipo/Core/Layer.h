@@ -2,6 +2,8 @@
 
 #include "Quipo/Events/Event.h"
 
+#include "Quipo/Core/Timestep.h"
+
 namespace Quipo {
 
   class Layer
@@ -12,7 +14,7 @@ namespace Quipo {
 
     virtual void OnAttach() = 0;
     virtual void OnDetach() = 0;
-    virtual void OnUpdate() = 0;
+    virtual void OnUpdate(Timestep ts) = 0;
     virtual void OnEvent(Event& e) = 0;
 
     inline const std::string& GetName() const { return m_DebugName; }

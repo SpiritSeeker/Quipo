@@ -10,6 +10,6 @@ public:
 
   virtual void OnAttach() override;
   virtual void OnDetach() override;
-  virtual void OnUpdate() override;
+  virtual void OnUpdate(Quipo::Timestep ts) override;
   virtual void OnEvent(Quipo::Event& e) override;
 };

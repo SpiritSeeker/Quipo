@@ -11,7 +11,7 @@ void ExampleLayer::OnDetach()
 {
 }
 
-void ExampleLayer::OnUpdate()
+void ExampleLayer::OnUpdate(Quipo::Timestep ts)
 {
   if (Quipo::Input::IsKeyPressed(QP_KEY_A))
     QP_INFO("Key \'A\' is pressed!");

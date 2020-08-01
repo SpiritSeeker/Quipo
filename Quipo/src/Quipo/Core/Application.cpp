@@ -22,11 +22,6 @@ namespace Quipo {
     m_Window->SetVSync(true);
 
     Renderer::Init();
-
-    ////////////////////////////////////////////////
-    /////// OpenGL code: To be removed later ///////
-
-    ////////////////////////////////////////////////
   }
 
   Application::~Application()
@@ -73,9 +68,6 @@ namespace Quipo {
       Timestep timestep = time - m_LastFrameTime;
       m_LastFrameTime = time;
 
-      ////////////////////////////////////////////////
-
-      ////////////////////////////////////////////////
       if (!m_Minimized)
       {
         for (Layer* layer : m_LayerStack)
@@ -102,7 +94,7 @@ namespace Quipo {
 
     m_Minimized = false;
     Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
-    
+
     return false;
   }
 

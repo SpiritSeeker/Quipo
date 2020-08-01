@@ -14,6 +14,7 @@
 
 ////////// Renderer //////////
 #include "Quipo/Renderer/Renderer.h"
+#include "Quipo/Renderer/Renderer2D.h"
 #include "Quipo/Renderer/RenderCommand.h"
 
 #include "Quipo/Renderer/Buffer.h"

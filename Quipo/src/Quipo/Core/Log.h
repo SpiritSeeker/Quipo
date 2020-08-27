@@ -40,4 +40,12 @@ namespace Quipo {
     #define QP_ASSERT(x, ...)
     #define QP_CORE_ASSERT(x, ...)
   #endif
+#elif QP_PLATFORM_WINDOWS
+  #ifdef QP_ENABLE_ASSERTS
+    #define QP_ASSERT(x, ...) { if(!(x)) QP_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); }
+    #define QP_CORE_ASSERT(x, ...) { if(!(x)) QP_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); }
+  #else
+    #define QP_ASSERT(x, ...)
+    #define QP_CORE_ASSERT(x, ...)
+  #endif
 #endif

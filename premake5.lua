@@ -1,5 +1,5 @@
 workspace "Quipo"
-	architecture "x64"
+	architecture "x86_64"
 	startproject "Sandbox"
 
 	configurations
@@ -11,7 +11,13 @@ workspace "Quipo"
 
 	platforms
 	{
+		"windows",
 		"linux"
+	}
+
+	flags
+	{
+		"MultiProcessorCompile"
 	}
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -84,6 +90,20 @@ project "Quipo"
 			"QP_PLATFORM_LINUX",
 		}
 
+	filter "system:windows"
+		systemversion "latest"
+		kind "StaticLib"
+
+		links
+		{
+			"opengl32.lib"
+		}
+
+		defines
+		{
+			"QP_PLATFORM_WINDOWS"
+		}
+
 	filter "configurations:Debug"
 		defines "QP_DEBUG"
 		runtime "Debug"
@@ -132,6 +152,13 @@ project "Sandbox"
 		defines
 		{
 			"QP_PLATFORM_LINUX",
+		}
+
+	filter "system:windows"
+
+		defines
+		{
+			"QP_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"

@@ -5,7 +5,11 @@ ExampleLayer::ExampleLayer()
 
 void ExampleLayer::OnAttach()
 {
+#ifdef QP_PLATFORM_LINUX
   m_Texture = Quipo::Texture2D::Create("Sandbox/assets/textures/cloud.png");
+#elif QP_PLATFORM_WINDOWS
+  m_Texture = Quipo::Texture2D::Create("assets/textures/cloud.png");
+#endif
 }
 
 void ExampleLayer::OnDetach()

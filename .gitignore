@@ -1,6 +1,11 @@
 # Directories
 bin/
 bin-int/
+.vs/
 
 # Files
 Makefile
+
+# Visual Studio files
+*.sln
+*.vcxproj*

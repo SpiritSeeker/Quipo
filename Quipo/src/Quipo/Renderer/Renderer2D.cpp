@@ -53,7 +53,12 @@ namespace Quipo {
     uint32_t whiteTextureData = 0xffffffff;
     s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 
+#ifdef QP_PLATFORM_LINUX
     s_Data.TextureShader = Shader::Create("Sandbox/assets/shaders/Texture.glsl");
+#elif QP_PLATFORM_WINDOWS
+    s_Data.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
+#endif
+        
     s_Data.TextureShader->Bind();
     s_Data.TextureShader->SetInt("u_Texture", 0);
   }
